@@ -5,6 +5,7 @@ class Neuronio:
  
     def __init__(self, numero_atributos, linha, coluna, pesos_aleatorios = False):
         self.w = []
+        self.entradas=[]
         self.linha = linha
         self.coluna = coluna
         for i in range (numero_atributos):
