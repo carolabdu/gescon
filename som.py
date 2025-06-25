@@ -1,5 +1,10 @@
 from neuronio.py import neuronio
 
+def normalizar_entrada(dados,max_min):
+  dados_normalizados = []
+  for i in range len(dados): 
+    x = (dados[i] - max_min[i][0])/(max_min[i][1] -max_min[i][0])
+    dados_normalizados.append(x)
 
 class SOM:
 
