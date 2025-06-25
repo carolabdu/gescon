@@ -1,10 +1,17 @@
 from neuronio.py import neuronio
 
+"""
+entradas =[] #usar como entrada para o SOM
+for data in dataset:
+  entrada= normalizar_entrada(data_dados, data_max_min)
+  entradas.append(entrada)
+
 def normalizar_entrada(dados,max_min):
   dados_normalizados = []
   for i in range len(dados): 
     x = (dados[i] - max_min[i][0])/(max_min[i][1] -max_min[i][0])
     dados_normalizados.append(x)
+  return dados_normalizados
 
 class SOM:
 
@@ -16,43 +23,47 @@ class SOM:
         self.linhas = linhas
         self.colunas = colunas
         self.decaimento = decaimento
-        self.sigma_vizinhanca = 1
+        self.sigma_vizinhanca = 1  #????
         for i in range(linhas):
-            self.matriz.append([])
-            for j in range (colunas):
-                self.matriz [i].append (Neuronio (numero_atributos=len(entradas),linha=i, coluna=j, pesos_aleatorios=True))
+            self.matriz.append([])  #lista onde o neurônio será adicionado
+            for j in range(colunas):
+                self.matriz[i].append (Neuronio(numero_atributos=len(entradas[0]),linha=i, coluna=j, pesos_aleatorios=True))
 
-  def calculo_bmu(self,entradas):
+  def calculo_bmu(self,entrada):  #Seleciona qual o neurônio correspondnete para entrada 
     bmu = None
-    d_bmu =0
+    d_bmu = 0
     for l in range(self.linhas):
       for c in range(self.colunas):
-        dj_sum = 0
         neuronio = self.matriz[l][c]
-        total_pesos = len(self.entradas)
-        for i in range(total_pesos):
-          dej_sum += (self.entrada[i] - neuronio.w[i])**2
-        dj = math.sqrt(dj_sum)
+        n = len(self.entrada)
+        dj = self.distancia_eucliana(n, entrada, neuronio.w) #com a atualização dos pesos as entradas vão sendo relacionadas a novos neuronios
         if bmu is None or dj < d_bmu:
             d_bmu = dj
             bmu = neuronio
       bmu.entradas.append(entrada)
       return bmu
-
-def ajuste_pesos(self,entrada bmu, eta, sigma):
-        for l in self.matriz: 
-                for neuronio in l:
-                        r = math.sqrt(((bmu.linha - neuronio.linha)**2) + (bmu.coluna - neuronio.coluna)**2)))
-                        taxa_vizinhanca = math.exp(- r/(2*sigma**2))
+      
+def distancia_euclidiana(self,n, a, b): #caclula a distância euclidiana entre dois vetores de tamanho n 
+  sum = 0
+  for i in range(n):
+    sum += (a[i]-b[i])**2
+  return math.sqrt(sum)
+  
+def ajuste_pesos(self,entrada bmu, eta, sigma): #para cada neuronio, atualiza seu pesos
+        for linha in self.matriz: 
+                for neuronio in linha:
+                        r = self.distancia_euclidiana(2, [bmu.linha, bmu.coluna], [neuronio.linha, neuronio.coluna]) #distancia entre neuronio e bmu
+                        #r = math.sqrt(((bmu.linha - neuronio.linha)**2) + (bmu.coluna - neuronio.coluna)**2)))
+                        taxa_vizinhanca = math.exp(- r/(2*sigma**2))  #quanto maior o sigma amior a vizinhanhança
                         for i in range (len(entrada)):
-                            neuronio.w[i] += taxa_vizinhanca * (entrada[i] - neuronio.w[i]) * eta
+                            neuronio.w[i] += taxa_vizinhanca * (entrada[i] - neuronio.w[i]) * eta 
 
-def treinar(self):
+def treinar(self):  
         eta = self.taxa_aprendizado
         for k in range(self.iteracoes):
             for linha in self.matriz:
                 for neuronio in linha:
-                    neuronio.entradas = []
+                    neuronio.entradas = []  #limpamos a entrada para selecionar novo bmu
             sigma = self.sigma_vizinhanca_linear(k) #????
             for i in range(len (self.entradas)):
                 bmu = self.eleger_bmu(self.entradas[i])
