@@ -52,22 +52,22 @@ def distancia_euclidiana(self,n, a, b): #caclula a distância euclidiana entre d
 def ajuste_pesos(self,entrada bmu, eta, sigma): #para cada neuronio, atualiza seu pesos
         for linha in self.matriz: 
                 for neuronio in linha:
-                        r = self.distancia_euclidiana(2, [bmu.linha, bmu.coluna], [neuronio.linha, neuronio.coluna]) #distancia entre neuronio e bmu
+                        r = self.distancia_euclidiana(2, [bmu.linha, bmu.coluna], [neuronio.linha, neuronio.coluna]) #distancia entre neuronio e bmu, quanto mais longe menos aprende
                         #r = math.sqrt(((bmu.linha - neuronio.linha)**2) + (bmu.coluna - neuronio.coluna)**2)))
-                        taxa_vizinhanca = math.exp(- r/(2*sigma**2))  #quanto maior o sigma amior a vizinhanhança
+                        taxa_vizinhanca = math.exp(- r/(2*sigma**2))  #quanto maior o sigma, maior a influencia no aprendizado
                         for i in range (len(entrada)):
                             neuronio.w[i] += taxa_vizinhanca * (entrada[i] - neuronio.w[i]) * eta 
 
 def treinar(self):  
         eta = self.taxa_aprendizado
         for k in range(self.iteracoes):
-            for linha in self.matriz:
+            for linha in self.matriz:  # para cada neurônio no grid
                 for neuronio in linha:
                     neuronio.entradas = []  #limpamos a entrada para selecionar novo bmu
             sigma = self.sigma_vizinhanca_linear(k) #????
-            for i in range(len (self.entradas)):
-                bmu = self.eleger_bmu(self.entradas[i])
-                self.atualizar_pesos(bmu, eta, sigma, self.entradas[i])
+            for i in range(len (self.entradas)): #para cada entrada 
+                bmu = self.eleger_bmu(self.entradas[i])  #selecionamos um bmu 
+                self.atualizar_pesos(bmu, eta, sigma, self.entradas[i])  #atualizmos os pesos de todos os neuronios do grid 
 
             if self.decaimento == 'linear':
                 eta = taxa_aprendizado * (1 - (k/self.iteracoes))
