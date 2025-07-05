@@ -194,23 +194,11 @@ if __name__ == "__main__":
 
     ari = calcular_ari(classes_iris_original, rotulos_kmeans)
     print(f"Adjusted Rand Index (ARI) do Agrupamento K-means: {ari:.4f}")
-    # --- Remapeamento dos Rótulos de Cluster para Classes Originais ---
-    # Isso é crucial para que as cores dos clusters do K-means correspondam visualmente às classes originais.
-    mapeamento_clusters_para_classes = {}
-    for cluster_id in range(kmeans_instancia.numero_clusters):
-        indices_no_cluster = agrupamentos_finais[cluster_id]
-        if len(indices_no_cluster) > 0:
-            classes_originais_no_cluster = classes_iris_original[indices_no_cluster]
-            classe_dominante = Counter(classes_originais_no_cluster).most_common(1)[0][0]
-            mapeamento_clusters_para_classes[cluster_id] = classe_dominante
-        else:
-            mapeamento_clusters_para_classes[cluster_id] = -1 # Caso um cluster esteja vazio
-
-    rotulos_kmeans_mapeados = np.array([mapeamento_clusters_para_classes[label] for label in rotulos_kmeans])
+   
 
     print("\n--- Visualização dos Agrupamentos do K-means (Coordenadas Paralelas, Cores Ajustadas) ---")
     # Passamos os rótulos do K-means JÁ REMAPEADOS para que as cores fiquem consistentes.
-    visualizar_coordenadas_paralelas(dados_iris_normalizados, rotulos_kmeans_mapeados, nomes_atributos_iris)
+    visualizar_coordenadas_paralelas(dados_iris_normalizados, rotulos_kmeans, nomes_atributos_iris)
 
 
     print("\n--- Visualização das Classes Originais do Iris (Coordenadas Paralelas) ---")
