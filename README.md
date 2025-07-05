@@ -8,4 +8,6 @@
 ## DBSCAN
 
 ## SOM 
+1. SOM.py : arquivo com apenas a implemmentação da classe SOM
+2. analise_som.ipynb : arquivo com a execução do som para diferentes cenários
 
