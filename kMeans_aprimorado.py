@@ -244,26 +244,10 @@ if __name__ == "__main__":
 
     print(f"Pureza do Agrupamento K-means (Melhor Execução): {pureza:.4f}")
     print(f"Adjusted Rand Index (ARI) do Agrupamento K-means (Melhor Execução): {ari:.4f}")
-    
-    # --- Remapeamento dos Rótulos de Cluster para Visualização Consistente ---
-    # Este remapeamento é SOMENTE para que as cores nos gráficos de coordenadas paralelas
-    # fiquem consistentes, NÃO afeta o cálculo do ARI ou Pureza.
-    mapeamento_clusters_para_classes = {}
-    # Itera sobre os agrupamentos da melhor execução
-    for cluster_id in range(kmeans_instancia.numero_clusters): 
-        indices_no_cluster = best_agrupamentos[cluster_id] 
-        if len(indices_no_cluster) > 0:
-            classes_originais_no_cluster = classes_iris_original[indices_no_cluster]
-            classe_dominante = Counter(classes_originais_no_cluster).most_common(1)[0][0]
-            mapeamento_clusters_para_classes[cluster_id] = classe_dominante
-        else:
-            mapeamento_clusters_para_classes[cluster_id] = -1 # Caso um cluster esteja vazio
-
-    # Aplica o mapeamento aos rótulos do K-means da melhor execução
-    rotulos_kmeans_mapeados_best = np.array([mapeamento_clusters_para_classes[label] for label in best_rotulos_kmeans])
+  
 
     print("\n--- Visualização dos Agrupamentos do K-means (Melhor Execução, Coordenadas Paralelas, Cores Ajustadas) ---")
-    visualizar_coordenadas_paralelas(dados_iris_normalizados, rotulos_kmeans_mapeados_best, nomes_atributos_iris)
+    visualizar_coordenadas_paralelas(dados_iris_normalizados, best_rotulos_kmeans, nomes_atributos_iris)
 
 
     print("\n--- Visualização das Classes Originais do Iris (Coordenadas Paralelas) ---")
