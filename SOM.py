@@ -176,49 +176,6 @@ def carregar_e_normalizar_iris():
     
     return dados_normalizados, iris.target, iris.feature_names, iris.target_names
 
-# --- Exemplo de Uso ---
-if __name__ == "__main__":
-    # Carregar e normalizar os dados Iris
-    dados_iris_normalizados, labels_iris, feature_names, target_names = carregar_e_normalizar_iris()
-    print("Shape dos dados normalizados:", dados_iris_normalizados.shape)
 
-    # Parâmetros do SOM
-    linhas_mapa = 10
-    colunas_mapa = 10
-    total_iteracoes = 100
-    taxa_aprendizado_inicial = 0.5
-    sigma_inicial = max(linhas_mapa, colunas_mapa) / 2 # Um bom valor inicial para sigma
-    estrategia_decaimento = 'linear' # ou 'constante', 'nao-linear'
 
-    # Criar e treinar o SOM
-    som_model = SOM(linhas=linhas_mapa,
-                    colunas=colunas_mapa,
-                    iteracoes=total_iteracoes,
-                    taxa_aprendizado_inicial=taxa_aprendizado_inicial,
-                    sigma_inicial=sigma_inicial,
-                    decaimento=estrategia_decaimento)
-
-    som_model.treinar(dados_iris_normalizados)
-
-    # --- Exemplo de Como Acessar os Pesos dos Neurônios Após o Treinamento ---
-    # Você pode inspecionar os pesos dos neurônios para entender os clusters formados.
-    # Por exemplo, os pesos do neurônio na linha 0, coluna 0:
-    # print("\nPesos do neurônio [0][0]:", som_model.matriz[0][0].w)
-
-    # Para visualizar os resultados (agrupamento), você precisaria:
-    # 1. Para cada ponto de entrada, encontrar seu BMU.
-    # 2. Mapear os rótulos originais para os neurônios do mapa e visualizar.
-    # Esta parte envolveria matplotlib para gráficos de dispersão, etc.
-    # Exemplo simples de mapeamento de entradas para BMUs:
-    # bmu_map = np.zeros((linhas_mapa, colunas_mapa), dtype=object)
-    # for i in range(linhas_mapa):
-    #     for j in range(colunas_mapa):
-    #         som_model.matriz[i][j].entradas_associadas = [] # Adicionar lista para armazenar entradas associadas
-
-    # for idx, entrada in enumerate(dados_iris_normalizados):
-    #    bmu = som_model.calcular_bmu(entrada)
-    #    # Aqui você pode associar a entrada ao BMU para análise posterior
-    #    # Por exemplo, se adicionasse uma lista `entradas_associadas` ao objeto Neuronio
-
-    print("\nTreinamento do SOM concluído. Os pesos dos neurônios estão ajustados.")
-    print("Para análise de agrupamento, o próximo passo seria mapear as entradas para seus BMUs e visualizar.")
+    
