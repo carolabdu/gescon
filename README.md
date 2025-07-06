@@ -6,6 +6,7 @@
 3. analise_kmeans.ipynb : KMeans com resultados computados.
    
 ## DBSCAN
+1. O código com os cenários geradios estão no arquivo dbscan.ipynb
 
 ## SOM 
 1. SOM.py : arquivo com apenas a implemmentação da classe SOM
